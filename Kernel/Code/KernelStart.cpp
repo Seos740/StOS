@@ -1,4 +1,8 @@
 #include "KeyboardRead.h"
+#include "DiskIO.h"
+#include "GDT.h"
+#include "Types.h"
+#include "FAT32.h"
 
 extern "C" void clear_screen() {
     char* video_memory = (char*)0xB8000;
