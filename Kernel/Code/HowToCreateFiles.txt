@@ -1,0 +1,90 @@
+bool FindFile(const char* filename, FileEntry* file);
+bool ReadFile(const char* filename, void* buffer, unsigned int size);
+bool WriteFile(const char* filename, const void* data, unsigned int size, unsigned char accessFlags);
+bool ModifyFilePermissions(const char* filename, unsigned char newFlags);
+bool DeleteFile(const char* filename);
+
+1. Example: FindFile
+c
+Copy
+Edit
+#include <stdio.h>
+
+void Example_FindFile() {
+    FileEntry file;
+    const char* filename = "EXAMPLE.TXT";
+
+    if (FindFile(filename, &file)) {
+        printf("File found: %s\n", filename);
+        printf("Start Cluster: %u\n", file.startCluster);
+        printf("File Size: %u bytes\n", file.fileSize);
+    } else {
+        printf("File not found: %s\n", filename);
+    }
+}
+2. Example: ReadFile
+c
+Copy
+Edit
+#include <stdio.h>
+#include <string.h>
+
+void Example_ReadFile() {
+    char buffer[256] = {0}; // Buffer to store file content
+    const char* filename = "EXAMPLE.TXT";
+
+    if (ReadFile(filename, buffer, sizeof(buffer))) {
+        printf("File contents:\n%s\n", buffer);
+    } else {
+        printf("Failed to read file: %s\n", filename);
+    }
+}
+3. Example: WriteFile
+c
+Copy
+Edit
+#include <stdio.h>
+
+void Example_WriteFile() {
+    const char* filename = "EXAMPLE.TXT";
+    const char* data = "Hello, world! This is a test file.";
+    unsigned int size = 35; // Length of the string
+    unsigned char accessFlags = FILE_READ | FILE_WRITE; // Allow read/write
+
+    if (WriteFile(filename, data, size, accessFlags)) {
+        printf("Successfully wrote to file: %s\n", filename);
+    } else {
+        printf("Failed to write to file: %s\n", filename);
+    }
+}
+4. Example: ModifyFilePermissions
+c
+Copy
+Edit
+#include <stdio.h>
+
+void Example_ModifyFilePermissions() {
+    const char* filename = "EXAMPLE.TXT";
+    unsigned char newFlags = FILE_READ | FILE_EXEC; // Read & execute only
+
+    if (ModifyFilePermissions(filename, newFlags)) {
+        printf("File permissions updated successfully for: %s\n", filename);
+    } else {
+        printf("Failed to modify file permissions for: %s\n", filename);
+    }
+}
+5. Example: DeleteFile
+c
+Copy
+Edit
+#include <stdio.h>
+
+void Example_DeleteFile() {
+    const char* filename = "EXAMPLE.TXT";
+
+    if (DeleteFile(filename)) {
+        printf("File deleted successfully: %s\n", filename);
+    } else {
+        printf("Failed to delete file: %s\n", filename);
+    }
+}
