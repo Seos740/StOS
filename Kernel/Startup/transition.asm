@@ -6,37 +6,40 @@ GDT_Start:
         dd 0
         dd 0
     code_descriptor:
-        dw 0xffff
-        dw 0
-        db 0
-        db 10011010
-        db 11001111
-        db 0
+        dw 0xffff      ; Limit (low)
+        dw 0          ; Base (low)
+        db 0          ; Base (middle)
+        db 10011010   ; Access byte (Code: executable, readable)
+        db 11001111   ; Limit (high) + flags
+        db 0          ; Base (high)
     data_descriptor:
-        dw 0xffff
-        dw 0
-        db 0
-        db 10011010
-        db 11001111
-        db 0
-    GDT_Descriptor:
-        dw GDT_End - GDT_Start - 1
-        dd Gdt_Start
+        dw 0xffff      ; Limit (low)
+        dw 0          ; Base (low)
+        db 0          ; Base (middle)
+        db 10010010   ; Access byte (Data: writable)
+        db 11001111   ; Limit (high) + flags
+        db 0          ; Base (high)
 
-    CODE_SEG equ code_descriptor - GDT_Start
-    DATA_SEG equ data_descriptor - GDT_Start
+GDT_End:
 
-    cli
+CODE_SEG equ (code_descriptor - GDT_Start)
+DATA_SEG equ (data_descriptor - GDT_Start)
 
-    lgdt [GDT_Descriptor]
+GDT_Descriptor:
+    dw GDT_End - GDT_Start - 1
+    dd GDT_Start
 
-    mov eax, cr0
-    or eax, 1
-    mov cr0, eax
+cli
 
-    jmp CODESEG:start_protected_mode
+lgdt [GDT_Descriptor]
 
-    [bits 32]
-    start_protected_mode:
+mov eax, cr0
+or eax, 1
+mov cr0, eax
 
-    jmp 0x100000
+jmp CODE_SEG:protected_mode_start
+
+[bits 32]
+protected_mode_start:
+    ; Do something useful in protected mode
+    jmp $

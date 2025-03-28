@@ -3,6 +3,9 @@
 #include "GDT.h"
 #include "Types.h"
 #include "FAT32.h"
+#include "MemoryManager.h"
+#include "StdTypes.h"
+#include "StringUtils.h"
 
 extern "C" void clear_screen() {
     char* video_memory = (char*)0xB8000;
@@ -14,7 +17,7 @@ extern "C" void clear_screen() {
 
 extern "C" void kernel_main() {
     char* video_memory = (char*)0xB8000;
-    const char* message = "StanleyOS Kernel is running in 32-Bit Mode. put your own code for once";
+    const char* message = "StanleyOS Kernel Is Running In 32-Bit Mode. Put Your Own Code For Once";
     
     for (int i = 0; message[i] != '\0'; i++) {
         video_memory[i * 2] = message[i];   
