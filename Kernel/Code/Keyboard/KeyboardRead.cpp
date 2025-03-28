@@ -1,6 +1,8 @@
 #define KEYBOARD_DATA_PORT  0x60
 #define KEYBOARD_STATUS_PORT 0x64
 
+// KeyboardRead.cpp
+
 #include "KeyboardRead.h"
 
 typedef unsigned char  uint8_t;
@@ -35,7 +37,8 @@ extern "C" void kernel_keyp() {
     char* video_memory = (char*)0xB8000;
 
     // Acknowledge the interrupt (PIC)
-    asm volatile("outb %0, %1" : : "a"(0x20), "Nd"(0x20));  // Send EOI to PIC master
+    uint8_t eoi = 0x20;
+    asm volatile("outb %0, %1" : : "a"(eoi), "Nd"(0x20));
 
     uint8_t scan_code = read_scan_code();
 

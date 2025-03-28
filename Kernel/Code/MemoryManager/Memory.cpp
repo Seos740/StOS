@@ -4,6 +4,8 @@
 #include "FAT32.h"
 #include "Types.h"
 
+// Memory.cpp
+
 // Define HEAP properties
 #define HEAP_START  0x100000        // Start address of heap (1MB)
 #define HEAP_MAX    0x100000000     // 4GB Max Heap
@@ -19,6 +21,9 @@ typedef unsigned long long size_t;  // Support large sizes for 64-bit
 #ifndef FILE_WRITE
 #define FILE_WRITE 0x02  // Example write flag
 #endif
+
+// Declare debug_log before using it
+extern "C" void debug_log(const char* message);
 
 // Custom implementation of strlen() (since standard libraries are unavailable)
 size_t strlen(const char* str) {
@@ -82,8 +87,8 @@ public:
 
     void expandHeap(size_t size) {
         if (heapEnd + size > HEAP_MAX) {
-            debug_log("Heap limit exceeded!");  // Log error
-            return; // Prevent exceeding 4GB
+            debug_log("Heap limit exceeded!");  // Now correctly declared
+            return;  // Prevent exceeding 4GB
         }
 
         Block* newBlock = (Block*)heapEnd;
