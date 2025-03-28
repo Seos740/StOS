@@ -1,6 +1,7 @@
-### **StOS Alpha 1.0.2**  
+### **StOS Alpha 1.0.3**  
 #### **ChangeLog:**  
-- **Added Memory Management Utilities**, supporting up to **_4GB_** of memory.  
+- 1.0.3 Alpha: **Bug fixes and restructuring.**
+- 1.0.2 Alpha: **Added Memory Management Utilities**, supporting up to **_4GB_** of memory.  
 
 
 
