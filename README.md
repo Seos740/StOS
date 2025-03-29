@@ -1,3 +1,5 @@
+_Note: StOS contains a build-in botloader._
+
 ### **StOS Alpha 1.0.3**  
 #### **ChangeLog:**  
 - 1.0.3 Alpha: **Bug fixes and restructuring.**
